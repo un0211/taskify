@@ -84,12 +84,12 @@ export default function DashboardModifySection({
 
     try {
       await putDashboardInfo(Number(id), value);
-      await handleFavoriteChange();
+      // await handleFavoriteChange();
       await handleIsPublicChange();
       openNotificationModal({ text: '대시보드 정보가 수정되었습니다!' });
       queryClient.invalidateQueries({ queryKey: ['dashboard', id] });
       queryClient.invalidateQueries({ queryKey: ['sideDashboards'] });
-      queryClient.invalidateQueries({ queryKey: ['favoritesDashboards'] });
+      // queryClient.invalidateQueries({ queryKey: ['favoritesDashboards'] });
 
       setIsButtonDisabled(true);
     } catch {
@@ -120,20 +120,14 @@ export default function DashboardModifySection({
 
   useEffect(() => {
     const handleButtonControl = async () => {
-      const [initIsPublic, initIsFavorite] = await Promise.all([
-        checkPublic(Number(id)),
-        checkFavorite(Number(user?.id), Number(id)),
-      ]);
+      const initIsPublic = await checkPublic(Number(id));
       setIsButtonDisabled(
-        (value.title === fixedTitle &&
-          value.color === fixedColor &&
-          isPublic === initIsPublic &&
-          isFavorite === initIsFavorite) ||
+        (value.title === fixedTitle && value.color === fixedColor && isPublic === initIsPublic) ||
           value.title.trim() === '',
       );
     };
     handleButtonControl();
-  }, [value.title, value.color, fixedTitle, fixedColor, isPublic, isFavorite]);
+  }, [value.title, value.color, fixedTitle, fixedColor, isPublic]);
 
   const handleColorSelect = (color: DashboardColor) => {
     setSelectedColor(color);
@@ -177,7 +171,7 @@ export default function DashboardModifySection({
           <span>공유</span>
           <Toggle isOn={isPublic} onToggleClick={onToggleClick} />
           <span>즐겨찾기</span>
-          <Toggle isOn={isFavorite} onToggleClick={handleFavoriteToggle} />
+          <Toggle isOn={isFavorite} onToggleClick={() => {}} />
         </div>
       </header>
       <main>
