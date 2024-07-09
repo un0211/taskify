@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import dashboardsReducer from './reducers/dashboardsSlice';
+import favoritesUserReducer from './reducers/favoritesUserSlice';
+import modalReducer from './reducers/modalSlice';
 import userReducer from './reducers/userSlice';
 
 const persistConfig = {
@@ -13,7 +14,8 @@ const persistedReducer = persistReducer(persistConfig, userReducer);
 export const store = configureStore({
   reducer: {
     user: persistedReducer,
-    dashboards: dashboardsReducer,
+    modal: modalReducer,
+    favoritesUser: favoritesUserReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

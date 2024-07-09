@@ -1,5 +1,15 @@
-const DashboardEditPage: React.FC = () => {
-  return <div>DashboardEdit</div>;
-};
+import Head from 'next/head';
 
-export default DashboardEditPage;
+import DashboardEdit from '@/containers/dashboard/edit';
+
+export default function DashboardEditPage() {
+  return (
+    <>
+      <Head>
+        <title>Taskify | 대시보드 수정</title>
+      </Head>
+
+      <DashboardEdit />
+    </>
+  );
+}
